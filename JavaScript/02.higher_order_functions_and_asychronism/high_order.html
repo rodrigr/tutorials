@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>High Order Functions</title>
+</head>
+<body>
+
+<ul id="list">
+	
+</ul>
+
+<script type="text/javascript">
+
+	let users;
+
+	fetch('https://jsonplaceholder.typicode.com/users')
+  	.then(function(response) {
+  	 	return response.json()
+  	})
+  	.then(function(json){
+  		users = json
+
+
+  	})
+
+
+
+	function createList(){
+		let aux = ""
+		for(let i = 0; i < users.length; i++){
+			aux += '<li>' + (i + 1) + '. name: ' + users[i].name + ', city: ' + users[i].address.city + '</li>'
+		}
+
+		document.getElementById("list").innerHTML = aux
+	}
+
+
+	/*
+	La función map() es una función de orden superior, es decir, recibe otra función como parámetro, denominada callback (funciones que se utilizan como argumento de otra). La función map() recorre o itera un array en su totalidad y devuelve otra array con la misma cantidad de elementos, transformados por lo que indique la función callback. La callback puede recibir hasta tres parámetros. El primero hace referencia al contenido dentro de cada posición del array, el segundo al índice de posición de ese contenido, y el tercero hace referencia al array mismo que estamos recorriendo. Después de la callback, el map() puede aceptar otra parámetro que hace referencia al valor que va a tener la palabra this dentro de la callback.
+
+		map(function(element,index,array){...}, thisValue)
+
+	*/
+
+	function useMap(){
+		document.getElementById("list").innerHTML = users.map(function(e,index){
+			//return '<li>' + (index + 1) + '. name: ' + e.name + ', city: ' + e.address.city + '</li>' 
+			return `<li>
+					${index + 1}. name: ${e.name}, city: ${e.address.city}
+					</li>`
+		}).join("")
+	}
+
+	function useMapWithArrow(){
+		document.getElementById("list").innerHTML = users.map((e,index) => `<li>${index + 1}. name: ${e.name}, city: ${e.address.city}</li>`).join("")
+	}
+
+	function createList2(){
+		for(let i = 0; i < users.length; i++){
+
+			let item = document.createElement('LI')
+			item.id = "li" + i
+			item.classList.add("item")
+			item.style.color = "blue"
+			item.innerText = (i+1) + '. name: ' + users[i].name + ', city: ' + users[i].address.city
+
+			document.getElementById("list").appendChild(item)
+		}
+	}
+
+	/*
+	La función forEach() tiene la misma lógica que map(), pero no devuelve nada, sino que ejecuta el código de la callback por cada elemento del array.
+	*/
+
+	function useForEach(array){
+		array.forEach((e,index) => {
+			let item = document.createElement('LI')
+			//item.innerText = (index+1) + '. name: ' + e.name + ', city: ' + e.address.city
+			item.innerText = `${index+1}.name: ${e.name}, city: ${e.address.city}`
+
+			document.getElementById("list").appendChild(item)
+		})
+	}
+
+	/*
+	La función filter() también recorre un array en su totalidad y devuelve un nuevo array. Pero este nuevo array puede contener menos elementos que el original, los mismos o ninguno. Todo depende de que pasen el filtro establecido en la condición de la callback. A diferencia de map(), filter() no permite transformar los elementos del array, solo decide si pasan al nuevo array o no.
+	*/
+
+	function filterList(){
+
+		let aux = ""
+
+		for(let i = 0; i < users.length; i++){
+			if(users[i].email.indexOf('.biz') != -1){
+				aux += `<li>${i + 1}. name: ${users[i].name}, city: ${users[i].address.city}</li>`
+			}
+		}
+
+		document.getElementById("list").innerHTML = aux
+	}
+
+	function useFilter(){
+		document.getElementById("list").innerHTML = users
+			.filter((e,index) => e.email.indexOf('.biz') != -1)
+			.map((e,index) => `<li>${index + 1}. name: ${e.name}, city: ${e.address.city}</li>`)
+			.join("")
+	}
+	
+</script>
+
+</body>
+</html>

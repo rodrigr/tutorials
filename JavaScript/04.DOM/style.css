@@ -1,0 +1,46 @@
+#container{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.rounded{
+	border-radius: 1em;
+}
+
+.flex{
+	padding: 1em;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-content: space-around;
+	align-items: center;
+}
+
+.perfect-centering{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@keyframes pulse{
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.pulse{
+	animation: pulse 1s infinite;
+}

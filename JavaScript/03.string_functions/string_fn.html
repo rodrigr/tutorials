@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>String Functions</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+
+
+		/***************************
+		 ***************************
+			Dar vuelta un número
+		 ***************************
+		 ***************************/
+
+		function reverseNumA(n){
+
+		  let aux = ""
+
+		  if(n < 0){
+		  	n = n * -1
+		  	aux = "-"
+		  }
+
+		  n = n + ""
+		  
+		  for(let i= n.length - 1; i >= 0; i--){
+		    aux += n[i]
+		  }
+
+		  return +aux
+		}
+
+		function reverseNumB (n) {
+
+			n = n.toString()
+
+			let array = n.split("")
+
+			let reverse = array.reverse()
+
+			let result = reverse.join("")
+		    
+		    return parseInt(result)
+		}
+
+		function reverseNumC (n) {
+
+			let result = n.toString().split("").reverse().join("")
+
+			if(n < 0){
+				result = "-" + result
+			}
+		    
+		    return parseInt(result)
+		}
+
+		/***************************
+		 ***************************
+			Ordenar una string
+		 ***************************
+		 ***************************/
+
+		function orderA(str){
+			return str.split("").sort().join("")
+		}
+
+		//Bubble sort
+		function orderB(str){
+			let aux = []
+
+			//convertimos la string a array
+			for(let i = 0; i < str.length; i++){
+				aux[i] = str[i]
+			}
+
+			//ordenamos el array
+			for(let i = 0; i < aux.length; i++){
+		        for(let j = i+1; j < aux.length; j++){
+		            if(aux[i] > aux[j]){
+		                let temp = aux[i]
+		                aux[i] = aux[j]
+		                aux[j] = temp
+		            }
+		        }
+		    }
+
+		    //convertimos el array ordenado en string
+		    let result = ""
+
+		    for(let i = 0; i<aux.length; i++){
+		    	result += aux[i]
+		    }
+
+
+		    return result
+		}
+
+		/***************************
+		 ***************************
+			Convertir a mayúsculas
+		 ***************************
+		 ***************************/
+
+		function upperA(str){
+			return str.split(" ").map( e => e[0].toUpperCase() + e.slice(1)).join(" ")
+		}
+
+		function upperB(str){
+			let aux = []
+
+			//separamos cada palabra en un array
+			for(let i = 0; i < str.length; i++){
+				if(i != 0 && str[i] == " "){
+					aux.push(str.slice(0,i))
+					str = str.slice(i + 1)
+					i=0
+				}
+			}
+
+			aux.push(str)
+
+
+			//convertimos la primera letra de cada palabra a mayúscula
+			for(let i = 0; i < aux.length; i++){
+				aux[i] = String.fromCharCode(aux[i][0].charCodeAt() - 32) + aux[i].slice(1)
+			}
+
+			//volvemos a formar la frase
+			let result = ""
+
+			for(let i = 0; i < aux.length; i++){
+				if(i != aux.length - 1){
+					result += aux[i] + " "
+				} else {
+					result += aux[i]
+				}
+				
+			}
+
+			return result
+		}
+
+		/*********************************
+		 *********************************
+			Buscar la palabra más larga
+		 *********************************
+		 *********************************/
+
+		 function longestWordA(str){
+		 	return str.split(" ").reduce( (result, el) => {
+		 		if(result.length < el.length){
+		 			result = el
+		 		}
+		 		return result
+		 	})
+		 }
+
+		 function longestWordB(str){
+
+		 	let array = str.split(" ")
+
+		 	let aux = str[0]
+
+		 	for(let i = 0; i < array.length; i++){
+		 		if(aux.length < array[i].length){
+		 			aux = array[i]
+		 		}
+		 	}
+
+		 	return aux
+		 }
+
+		 function longestWordC(str){
+
+		 	let array = str.split(" ")
+
+		 	let aux = str[0].length
+
+		 	let result = []
+
+		 	for(let i = 0; i < array.length; i++){
+		 		if(aux < array[i].length){
+		 			aux = array[i].length
+		 		}
+		 	}
+
+		 	for(let i = 0; i < array.length; i++){
+		 		if(array[i].length == aux){
+		 			result.push(array[i])
+		 		}
+		 	}
+
+
+
+		 	return result
+		 }
+
+		 function longestWordD(str){
+
+		 	let array = str.split(" ")
+
+		 	let aux = array.reduce( (result, el) => result < el.length ? result = el.length : result, 0)
+
+		 	return array.filter(el => el.length == aux)
+		 }
+
+
+
+	</script>
+
+</body>
+</html>

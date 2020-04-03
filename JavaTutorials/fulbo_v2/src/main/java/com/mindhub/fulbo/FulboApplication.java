@@ -30,17 +30,17 @@ public class FulboApplication {
 			Club corinthians = new Club("Corinthians",Pais.BRASIL);
 
 			//Jugadores
-			Jugador messi = new Jugador("Leonel","Messi", LocalDate.parse("1987-06-24"),10,barcelona,Posicion.DEL);
-			Jugador suarez = new Jugador("Luis","Suárez", LocalDate.parse("1987-01-24"),9,barcelona,Posicion.DEL);
+			Jugador messi = new Jugador("Leonel","Messi", LocalDate.parse("1987-06-24"),10,barcelona,Posicion.DEL, 1.7);
+			Jugador suarez = new Jugador("Luis","Suárez", LocalDate.parse("1987-01-24"),9,barcelona,Posicion.DEL,1.82);
 
 			barcelona.getJugadores().add(messi);
 			barcelona.getJugadores().add(suarez);
 
-			Jugador tevez = new Jugador("Carlos","Tévez", LocalDate.parse("1984-02-05"),10,boca,Posicion.DEL);
-			Jugador abila = new Jugador("Ramón","Ábila", LocalDate.parse("1989-10-14"),9,boca,Posicion.DEL);
-			Jugador andrada = new Jugador("Esteban","Andrada", LocalDate.parse("1991-01-26"),1,boca,Posicion.ARQ);
-			Jugador mas = new Jugador("Emmanuel","Mas", LocalDate.parse("1989-01-15"),3,boca,Posicion.DEF);
-			Jugador salvio = new Jugador("Eduardo","Salvio", LocalDate.parse("1990-07-13"),11,boca,Posicion.MED);
+			Jugador tevez = new Jugador("Carlos","Tévez", LocalDate.parse("1984-02-05"),10,boca,Posicion.DEL,1.73);
+			Jugador abila = new Jugador("Ramón","Ábila", LocalDate.parse("1989-10-14"),9,boca,Posicion.DEL,1.80);
+			Jugador andrada = new Jugador("Esteban","Andrada", LocalDate.parse("1991-01-26"),1,boca,Posicion.ARQ,1.93);
+			Jugador mas = new Jugador("Emmanuel","Mas", LocalDate.parse("1989-01-15"),3,boca,Posicion.DEF,1.8);
+			Jugador salvio = new Jugador("Eduardo","Salvio", LocalDate.parse("1990-07-13"),11,boca,Posicion.MED,1.71);
 
 			boca.getJugadores().add(tevez);
 			boca.getJugadores().add(abila);

@@ -82,7 +82,7 @@ public class Club {
         Map<String,Object> dto = new LinkedHashMap<>();
         dto.put("club", this.getNombre());
         dto.put("pais", this.getPais().toString());
-        dto.put("tecnico", this.getTecnico().tecnicoDTO());
+        dto.put("tecnico",this.getTecnico() != null ? this.getTecnico().tecnicoDTO(): null );
         dto.put("jugadores", this.getJugadores().stream().map(Jugador::jugadorDTO));
         return dto;
     }

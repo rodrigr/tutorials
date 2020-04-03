@@ -18,9 +18,11 @@ public class Jugador extends Persona {
     @CollectionTable(name = "trayectoria")
     private List<Club> clubesAnteriores;
 
+    private double altura;
+
     public Jugador(){}
 
-    public Jugador(String nombre, String apellido, LocalDate fecha_nacimiento, int numero, Club club, Posicion posicion) {
+    public Jugador(String nombre, String apellido, LocalDate fecha_nacimiento, int numero, Club club, Posicion posicion, double altura) {
         //la funcion super() hace referencia al constructor de la clase madre (Persona) y lleva como argumento los datos que deben
         //ser llenados para cumplir con el constructor de Persona
         super(nombre, apellido, fecha_nacimiento);
@@ -28,6 +30,7 @@ public class Jugador extends Persona {
         this.club = club;
         this.posicion = posicion;
         this.clubesAnteriores = new LinkedList<>();
+        this.altura = altura;
     }
 
     public int getNumero() {
@@ -62,6 +65,14 @@ public class Jugador extends Persona {
         this.clubesAnteriores.add(club);
     }
 
+    public double getAltura() {
+        return altura;
+    }
+
+    public void setAltura(double altura) {
+        this.altura = altura;
+    }
+
     //la anotación @Override indica que vamos a sobrescribir un método abstracto de la clase madre (polimorfismo)
     @Override
     public String presentarse() {
@@ -73,6 +84,7 @@ public class Jugador extends Persona {
         dto.put("nombre", this.getNombre());
         dto.put("apellido", this.getApellido());
         dto.put("fecha_nacimiento", this.getFecha_nacimiento());
+        dto.put("altura",this.getAltura());
         return dto;
     }
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue Demo</title>
+</head>
+<body>
+
+	<div id="app">
+		<select v-model="select" name="users">
+			<option value="all">ALL</option>
+			<option v-for="user in users" v-bind:value="user.id">{{user.username}}</option>
+		</select>
+		<table>
+			<tr>
+				<th v-for="(value,key) in users[0]">
+					{{toUpper(key)}}
+				</th>
+			</tr>
+			<tr v-for="user in filterUsers">
+				<td v-for="(value,key) in user">
+					<template v-if="key != 'address' && key != 'company' && key != 'email'">
+						{{value}}
+					</template>
+					<template v-else-if="key == 'address'">
+						{{value.street}}, {{value.city}}
+					</template>
+					<template v-else-if="key == 'email'">
+						<a v-bind:href="'mailto:' +value">{{value}}</a>
+					</template>
+					<template v-else>
+						{{value.name}}
+					</template>
+				</td>
+				
+				
+			</tr>
+		</table>
+		
+		<template v-if="boolean">
+			
+		</template>
+
+		<div v-show="boolean">
+			<p>Hola</p>
+		</div>
+	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="post.js"></script>
+	<script src="users.js"></script>
+	<script>
+		let app = new Vue({
+			el: '#app',
+			data: {
+				message: "Hola",
+				post: post,
+				users: users,
+				select: "all",
+				boolean: false
+			},
+			methods: {
+				toUpper(str){
+					return str[0].toUpperCase() + str.slice(1)
+				},
+				change(){
+					this.boolean = !this.boolean
+				}
+			},
+			computed: {
+				filterUsers(){
+					return this.users.filter(user => {
+						if(user.id == this.select || this.select == "all"){
+							return user
+						}
+					})
+				}
+			}
+		})
+
+
+
+	</script>
+</body>
+</html>

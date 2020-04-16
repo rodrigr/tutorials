@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Grid Calc</title>
+	<style>
+
+		body{
+			margin: 0;
+		}
+
+		#container{
+			height: 100vh;
+			width: 100vw;
+			display: flex;
+			flex-flow: column-reverse nowrap;
+			justify-content: center;
+			align-items: center;
+		}
+
+		#calc{
+			display: grid;
+			/*grid-template-columns: repeat(4,100px);
+			grid-template-rows: repeat(4,100px);*/
+			grid-gap: 10px;
+			grid-template-areas: 
+			'seven eight nine plus backspace'
+			'four five six minus float'
+			'one two three by equal'
+			'zeroo zeroo zeroo divided equal';
+			width: 500px;
+			height: 400px;
+		}
+
+		#calc>div{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: #007bff;
+			font-weight: bold;
+			font-size: 150%;
+			border-radius: 10px;
+			color: #f7f7f7;
+			cursor: pointer;
+		}
+
+		#calc>div:hover{
+			background: #0000ff
+		}
+
+		#zero{
+			grid-area: zeroo;
+		}
+
+		#one{
+			grid-area: one;
+		}
+
+		#two{
+			grid-area: two;
+		}
+
+		#three{
+			grid-area: three;
+		}
+
+		#four{
+			grid-area: four;
+		}
+
+		#five{
+			grid-area: five;
+		}
+
+		#six{
+			grid-area: six;
+		}
+
+		#seven{
+			grid-area: seven;
+		}
+
+		#eight{
+			grid-area: eight;
+		}
+
+		#nine{
+			grid-area: nine;
+		}
+
+		#plus{
+			grid-area: plus;
+		}
+
+		#minus{
+			grid-area: minus;
+		}
+		
+		#by{
+			grid-area: by;
+		}
+
+		#divided{
+			grid-area: divided;
+		}
+
+		#backspace{
+			grid-area: backspace;
+		}
+
+		#equal{
+			grid-area: equal;
+		}
+
+		#float{
+			grid-area: float;
+		}
+
+		#output{
+			margin: 10px 0;
+			border: 2px solid #6c757d;
+			box-sizing: content-box;
+			border-radius: 10px;
+			width: 490px;
+			height: 50px;
+			padding-right: 10px;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			font-weight: bold;
+			font-size: 150%;
+			overflow: auto;
+		}
+
+		@media only screen and (max-width: 576px){
+			#calc{
+				width: 300px;
+				height: 375px;
+				grid-template-areas: 
+				'seven eight nine plus'
+				'four five six plus'
+				'one two three minus'
+				'float zeroo by divided'
+				'backspace backspace equal equal';
+			}
+
+			#output{
+				width: 290px;
+			}
+		}
+
+		@media only screen and (max-height: 400px){
+			#calc{
+				grid-template-areas: 
+				'seven eight nine plus backspace'
+				'four five six minus float'
+				'one two three by equal'
+				'zeroo zeroo zeroo divided equal';
+				width: 500px;
+				height: 250px;
+			}
+		}
+
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="calc">
+			<div id="zero" class="key">0</div>
+			<div id="one" class="key">1</div>
+			<div id="two" class="key">2</div>
+			<div id="three" class="key">3</div>
+			<div id="four" class="key">4</div>
+			<div id="five" class="key">5</div>
+			<div id="six" class="key">6</div>
+			<div id="seven" class="key">7</div>
+			<div id="eight" class="key">8</div>
+			<div id="nine" class="key">9</div>
+			<div id="plus" class="key op">+</div>
+			<div id="minus" class="key op">-</div>
+			<div id="by" class="key op">*</div>
+			<div id="divided" class="key op">/</div>
+			<div id="backspace"><<</div>
+			<div id="equal">=</div>
+			<div id="float" class="key">.</div>
+		</div>
+		<div id="output"></div>
+	</div>
+	
+	<script>
+		const keys = document.querySelectorAll('.key')
+		const output = document.querySelector("#output")
+		const backspace = document.querySelector('#backspace')
+		const equal = document.querySelector('#equal')
+
+		keys.forEach(key => key.addEventListener('click',print))
+		backspace.addEventListener('click',clear)
+		equal.addEventListener('click',result)
+
+		function print(event){
+			let key = event.target
+			if(key.classList.contains('op')){
+				if((key.innerText == '/' || key.innerText == '*')  && output.innerText == ''){
+					return
+				}
+				output.innerHTML += `<span style="color:red">${key.innerText}</span>`
+			}else{
+				if(key.innerText == '0'  && output.innerText == ''){
+					return
+				}
+				output.innerHTML += key.innerText;
+			}
+			
+		}
+
+		function clear(event){
+			output.innerText = ""
+		}
+
+		function result(event){
+			try{
+				output.innerHTML = eval(output.innerText) 
+			}catch(error){
+				output.innerHTML = `<span style="color:red">${error.name}</span>`
+			}
+			
+			
+		}
+	</script>
+</body>
+</html>

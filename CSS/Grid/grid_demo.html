@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Grid Demo</title>
+	<style>
+
+		body{
+			margin: 0;
+		}
+
+		#container{
+			display: grid;
+			height: 96vh;
+			padding: 2vh;
+			grid-template-columns: /*auto auto auto;*/ /*repeat(3,auto);*/ repeat(3,100px);
+			grid-template-rows: /*1fr 1fr 1fr 1fr;*/ repeat(4, 100px);
+			grid-gap: 2vh;
+			justify-content: center; /*start;*/ /*end;*/ /*space-around;*/ /*space-between;*/ /*space-evenly;*/
+			align-content: center; /*space-evenly;*/ /*space-around;*/ /*space-between;*/ /*start;*/ /*end;*/
+		}
+
+		#container>div{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: #007bff;
+			font-weight: bold;
+			font-size: 150%;
+			border-radius: 10px;
+			color: #f7f7f7;
+		}
+
+		/*#container>div:first-child{
+			grid-column: 3 span;
+		}
+
+		#container>div:nth-child(4){
+			grid-row: span 2;
+		}*/
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<div>5</div>
+		<div>6</div>
+		<div>7</div>
+		<div>8</div>
+		<div>9</div>
+		<div>10</div>
+		<div>11</div>
+		<div>12</div>
+	</div>
+</body>
+</html>

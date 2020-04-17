@@ -43,6 +43,13 @@
 			border-radius: 10px;
 			color: #f7f7f7;
 			cursor: pointer;
+			box-shadow: 0 5px #999
+		}
+
+		#calc>div:active{
+			background-color: #3e8e41;
+			box-shadow: 0 2px #666;
+			transform: translateY(3px);
 		}
 
 		#calc>div:hover{
@@ -200,15 +207,10 @@
 
 		function print(event){
 			let key = event.target
+			
 			if(key.classList.contains('op')){
-				if((key.innerText == '/' || key.innerText == '*')  && output.innerText == ''){
-					return
-				}
 				output.innerHTML += `<span style="color:red">${key.innerText}</span>`
 			}else{
-				if(key.innerText == '0'  && output.innerText == ''){
-					return
-				}
 				output.innerHTML += key.innerText;
 			}
 			

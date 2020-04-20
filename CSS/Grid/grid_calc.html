@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
 	<link rel="icon" href="grid_calc_logo.svg">
 	<title>Grid Calc</title>
 	<style>
@@ -23,13 +24,11 @@
 
 		#calc{
 			display: grid;
-			/*grid-template-columns: repeat(4,100px);
-			grid-template-rows: repeat(4,100px);*/
 			grid-gap: 10px;
 			grid-template-areas: 
-			'seven eight nine plus backspace'
-			'four five six minus float'
-			'one two three by equal'
+			'seven eight nine plus clear'
+			'four five six minus backspace'
+			'one two three by float'
 			'zeroo zeroo zeroo divided equal';
 			width: 500px;
 			height: 400px;
@@ -126,6 +125,11 @@
 			grid-area: float;
 		}
 
+		#clear{
+			grid-area: clear;
+			background: #dc3545 !important;
+		}
+
 		#output{
 			margin: 10px 0;
 			border: 2px solid #6c757d;
@@ -171,7 +175,7 @@
 				'four five six plus'
 				'one two three minus'
 				'float zeroo by divided'
-				'backspace backspace equal equal';
+				'clear backspace equal equal';
 			}
 
 			#output{
@@ -182,9 +186,9 @@
 		@media only screen and (max-height: 400px){
 			#calc{
 				grid-template-areas: 
-				'seven eight nine plus backspace'
-				'four five six minus float'
-				'one two three by equal'
+				'seven eight nine plus clear'
+				'four five six minus backspace'
+				'one two three by float'
 				'zeroo zeroo zeroo divided equal';
 				width: 500px;
 				height: 220px;
@@ -215,6 +219,7 @@
 			<div id="by" class="key op">*</div>
 			<div id="divided" class="key op">/</div>
 			<div id="backspace"><<</div>
+			<div id="clear">C</div>
 			<div id="equal">=</div>
 			<div id="float" class="key">.</div>
 		</div>
@@ -229,14 +234,21 @@
 		const keys = document.querySelectorAll('.key')
 		const output = document.querySelector("#output")
 		const backspace = document.querySelector('#backspace')
+		const clearBtn = document.querySelector('#clear')
 		const equal = document.querySelector('#equal')
+		const ops = ['+','-','*','/']
 
 		keys.forEach(key => key.addEventListener('click',print))
-		backspace.addEventListener('click',clear)
+		clearBtn.addEventListener('click',clear)
+		backspace.addEventListener('click',erase)
 		equal.addEventListener('click',result)
 
 		function print(event){
 			let key = event.target
+
+			if(output.innerText ==  'SyntaxError'){
+				output.innerText = ''
+			}
 			
 			if(key.classList.contains('op')){
 				output.innerHTML += `<span style="color:red">${key.innerText}</span>`
@@ -248,6 +260,24 @@
 
 		function clear(event){
 			output.innerText = ""
+		}
+
+		function erase(event){
+			let calc = output.innerText
+			if(calc ==  'SyntaxError'){
+				output.innerText = ''
+			}else{
+				if(ops.some(op => calc.includes(op))){
+						output.innerHTML = calc.slice(0,calc.length - 1)
+						let regex = new RegExp("\\+|\\-|\\*|\\/|\\^|√",'g')
+						let result = output.innerText.replace(regex,`<span style="color:red">$&</span>`)
+						if(result != output.innerText){
+							output.innerHTML = result
+						}
+				}else{
+					output.innerHTML = calc.slice(0,calc.length - 1)
+				}	
+			}	
 		}
 
 		function result(event){

@@ -5,8 +5,14 @@
 	<title>Grid Demo</title>
 	<style>
 
+		:root{
+			--main-color: #007bff;
+			--text-color: #f7f7f7;
+		}
+
 		body{
 			margin: 0;
+			font-family: Arial, Helvetica, sans-serif;
 		}
 
 		#container{
@@ -14,8 +20,8 @@
 			height: 96vh;
 			padding: 2vh;
 			grid-template-columns: /*auto auto auto;*/ /*repeat(3,auto);*/ repeat(3,100px);
-			grid-template-rows: /*1fr 1fr 1fr 1fr;*/ repeat(4, 100px);
-			grid-gap: 2vh;
+			grid-template-rows: /*1fr 1fr 1fr 1fr;*/ repeat(5, 100px);
+			grid-gap: 10px;
 			justify-content: center; /*start;*/ /*end;*/ /*space-around;*/ /*space-between;*/ /*space-evenly;*/
 			align-content: center; /*space-evenly;*/ /*space-around;*/ /*space-between;*/ /*start;*/ /*end;*/
 		}
@@ -24,20 +30,25 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background: #007bff;
+			background: var(--main-color);
 			font-weight: bold;
 			font-size: 150%;
 			border-radius: 10px;
-			color: #f7f7f7;
+			color: var(--text-color);
 		}
 
-		/*#container>div:first-child{
-			grid-column: 3 span;
+		#container>div:first-child{
+			grid-row: 2;
+			grid-column: 2/ span 2;
 		}
 
-		#container>div:nth-child(4){
+		#container>div:nth-child(2){
 			grid-row: span 2;
-		}*/
+		}
+
+		#container>div:last-child{
+			grid-column: span 2;
+		}
 	</style>
 </head>
 <body>

@@ -8,6 +8,11 @@
 	<title>Grid Calc</title>
 	<style>
 
+		:root{
+			--main-color: #007bff;
+			--text-color: #f7f7f7;
+		}
+
 		body{
 			margin: 0;
 			font-family: Arial, Helvetica, sans-serif;
@@ -38,11 +43,11 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background: #007bff;
+			background: var(--main-color);
 			font-weight: bold;
 			font-size: 150%;
 			border-radius: 10px;
-			color: #f7f7f7;
+			color: var(--text-color);
 			cursor: pointer;
 			box-shadow: 0 5px #999
 		}
@@ -269,7 +274,7 @@
 			}else{
 				if(ops.some(op => calc.includes(op))){
 						output.innerHTML = calc.slice(0,calc.length - 1)
-						let regex = new RegExp("\\+|\\-|\\*|\\/|\\^|√",'g')
+						let regex = new RegExp("\\+|\\-|\\*|\\/",'g')
 						let result = output.innerText.replace(regex,`<span style="color:red">$&</span>`)
 						if(result != output.innerText){
 							output.innerHTML = result

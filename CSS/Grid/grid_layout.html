@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grid</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style type="text/css">
+
+		body{
+			margin: 0;
+		}
+
+		.grid-container {
+		  	display: grid;
+		  	grid-template-columns: 1fr 4fr .5fr;
+		  	grid-template-rows: 2fr 5fr 1fr;
+		  	height: 100vh;
+		  	grid-column-gap: 5px;
+		  	grid-row-gap: 5px;
+		  	grid-template-areas: 
+		  		"nav header header"
+		  		"nav main aside"
+		  		"nav footer aside"; 
+		}
+
+		.grid-item{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-weight: bold;
+			
+		}
+
+		header{
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around !important;
+			background: lightblue;
+			grid-area: header;
+		}
+
+		nav{
+			grid-area: nav;
+			background: green;
+		}
+
+		main{
+			grid-area: main;
+			background: orange;
+			flex-direction: column;
+		}
+
+		aside{
+			grid-area: aside;
+			background: purple;
+			
+		}
+
+		footer{
+			
+			grid-area: footer;
+			background: gray;
+		}
+
+		@media only screen and (max-width: 600px){
+			.grid-container {
+				grid-template-columns: repeat(2,auto);
+		  		grid-template-rows: 2fr 5fr 1fr;
+			  	grid-template-areas: 
+			  		"header nav"
+			  		"main main"
+			  		"footer footer"; 
+			}
+
+			aside{
+				display: none !important;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="grid-container">
+		<header class="grid-item"> 
+			<p>Header</p>
+		</header>
+		<nav class="grid-item"> 
+			<p>Nav</p>
+		</nav>
+		<main class="grid-item">
+			<p>Main</p>
+		</main>
+		<aside class="grid-item">
+			<p>Aside</p>
+		</aside>
+		<footer class="grid-item">
+			<p>Footer</p>
+		</footer>
+	</div>
+</body>
+</html>

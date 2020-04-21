@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="grid_calc_logo.svg">
+	<title>Grid Calc Vue</title>
+	<style>
+		:root{
+			--main-color: #007bff;
+			--text-color: #f7f7f7;
+		}
+
+		body{
+			margin: 0;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		.container{
+			height: 93vh;
+			width: 100vw;
+			display: flex;
+			flex-flow: column-reverse nowrap;
+			justify-content: center;
+			align-items: center;
+
+		}
+
+		#calc{
+			display: grid;
+			grid-gap: 10px;
+			grid-template-areas: 
+			'seven eight nine plus clear'
+			'four five six minus backspace'
+			'one two three by float'
+			'zeroo zeroo zeroo divided equal';
+			width: 500px;
+			height: 400px;
+		}
+
+		#calc>div{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: var(--main-color);
+			font-weight: bold;
+			font-size: 150%;
+			border-radius: 10px;
+			color: var(--text-color);
+			cursor: pointer;
+			box-shadow: 0 5px #999
+		}
+
+		#calc>div:active{
+			box-shadow: 0 2px #666;
+			transform: translateY(3px);
+		}
+
+		#calc>div:hover{
+			background: #0000ff
+		}
+
+		
+
+		#clear{
+			background: #dc3545 !important;
+		}
+
+		#output{
+			margin: 10px 0;
+			border: 2px solid #6c757d;
+			box-sizing: content-box;
+			border-radius: 10px;
+			width: 490px;
+			height: 50px;
+			padding-right: 10px;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			font-weight: bold;
+			font-size: 150%;
+			overflow: auto;
+		}
+
+		@media only screen and (max-width: 576px){
+			#calc{
+				width: 300px;
+				height: 375px;
+				grid-template-areas: 
+				'seven eight nine plus'
+				'four five six plus'
+				'one two three minus'
+				'float zeroo by divided'
+				'clear backspace equal equal';
+			}
+
+			#output{
+				width: 290px;
+			}
+		}
+
+		@media only screen and (max-height: 400px){
+			#calc{
+				grid-template-areas: 
+				'seven eight nine plus clear'
+				'four five six minus backspace'
+				'one two three by float'
+				'zeroo zeroo zeroo divided equal';
+				width: 500px;
+				height: 220px;
+			}
+
+			#footer{
+				height: 10vh;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="app" class="container">
+		<div id="calc">
+			<div v-for="number in numbers" v-bind:id="number.name" class="key" @click="print(number)" :style="'grid-area:' + number.name">{{number.value}}</div>
+			<div v-for="op in ops" :id="op.name" class="key op" @click="print(op)" :style="'grid-area:' + op.name">{{op.value}}</div>
+			<div v-for="action in actions" :id="action.name" @click="handleFn(action.name)" :style="'grid-area:' + action.name">{{action.value}}</div>
+		</div>
+		<div id="output"><template v-for="value in fancyOutput"><span v-html="value"></span></template></div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		const app = new Vue({
+			el: '#app',
+			data: {
+				numbers: [{name: 'zeroo',value: 0},{name: 'one',value: 1},{name: 'two',value: 2},{name: 'three',value: 3},{name: 'four',value: 4},{name: 'five',value: 5},{name: 'six',value: 6},{name: 'seven',value: 7},{name: 'eight',value: 8},{name: 'nine',value: 9},{name: 'float',value: '.'}],
+				ops: [{name: 'plus', value: '+'},{name: 'minus', value: '-'},{name: 'by', value: '*'},{name: 'divided', value: '/'}],
+				actions: [{name: 'equal', value: '='},{name: 'clear', value: 'C'},{name: 'backspace', value: '<<'}],
+				output: []
+			},
+			methods: {
+				print(key){
+					if(this.output.includes('SyntaxError')){
+						this.output = []
+					}
+
+					this.output.push(key.value)
+				},
+				clear(){
+					this.output = []
+				},
+				backspace(){
+					if(this.output.includes('SyntaxError')){
+						this.output = []
+					}else{
+						this.output.pop()
+					}
+					
+				},
+				equal(){
+					try{
+						this.output = [eval(this.output.join(''))]
+					}catch(error){
+						this.output = [error.name]
+					}
+				},
+				handleFn(fn_name){
+					return this[fn_name]()
+				}
+			},
+			computed:{
+				fancyOutput(){
+					return this.output.map(e => this.ops.some(op => e == op.value) || e == 'SyntaxError' ? `<span style="color:red">${e}</span>` : e)
+				}
+			}
+		})
+	</script>
+</body>
+</html>
